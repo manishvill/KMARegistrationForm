@@ -1,0 +1,31 @@
+package kma_registration_form_DB;
+
+import java.util.Calendar;
+import java.util.Formatter;
+
+public class MakeRegID {
+	
+	static Formatter fmt = new Formatter();
+	
+	static String generateID(int year){
+		
+		String ID = GetLastRegID.getlastID();
+		
+		if(year != 0){
+			
+			String prefix_regID = "KMA";
+			String get_Month = fmt.format("%tb", Calendar.getInstance()).toString().toUpperCase();
+			int get_Year = Calendar.getInstance().get(Calendar.YEAR) - 2000;
+			ID = GetLastRegID.getlastID();
+			ID = ID.substring(10, ID.length());
+			int index = Integer.parseInt(ID);
+			index = index + 1;
+			ID = prefix_regID + get_Month + get_Year + year + index;
+			
+			return ID;
+		}else {
+			return "IDerror";
+		}
+	}
+
+}

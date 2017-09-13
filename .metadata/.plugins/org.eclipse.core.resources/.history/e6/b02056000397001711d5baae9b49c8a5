@@ -1,0 +1,67 @@
+package kma_registration_form_DB;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class CreatingDBTable {
+	
+	public static ResultSet rs = null;
+	public static Connection conn = null;
+	public static Statement statement = null;
+	
+	public static void createTable(){
+		
+		//final String QUERYUseDB = "use manish;";
+		
+		final String QUERYReg = "CREATE TABLE REGISTRATION_LIST("
+				+ "regid INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
+				+ "name varchar(50) not null, "
+				+ "dob varchar(11) not null, "
+				+ "gender varchar(10) not null, "
+				+ "personal_emailid varchar(50) not null, "
+				+ "company_emailid varchar(50) not null, "
+				+ "contact_number varchar(10) not null, "
+				+ "whatsapp_number varchar(10) not null,"
+				+ "options varchar(20) not null,"
+				+ "pp_photo blob);";
+		
+		final String QUERYPayment = "CREATE TABLE PAYMENT_DETAILS("
+				+ "payment_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
+				+ "regid int not null, "
+				+ "payment_mode varchar(10) not null, "
+				+ "recipt_no varchar(10) not null, "
+				+ "transaction_no varchar(50), "
+				+ "chqDDno varchar(50), "
+				+ "amount_paid varchar(10) not null, "
+				+ "amount_bal varchar(10) not null,"
+				+ "foreign key regid_fk(regid)"
+				+ "references registration_list(regid)"
+				+ "on update cascade"
+				+ "on delete cascade);";
+		
+		ConnectingMySqlDB obj = ConnectingMySqlDB.getConnectingMySqlDB();
+		conn = obj.getConnected();
+		try {
+			statement = conn.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			//rs = statement.executeQuery(QUERYUseDB);
+			//System.out.println(rs);
+			rs = statement.executeQuery(QUERYReg);
+			System.out.println(rs);
+			rs = statement.executeQuery(QUERYPayment);
+			System.out.println(rs);
+			System.out.println("TABLE CREATED");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+}

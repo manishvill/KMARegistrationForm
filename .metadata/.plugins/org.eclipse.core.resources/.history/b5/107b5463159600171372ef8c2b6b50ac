@@ -1,0 +1,53 @@
+package kma_registration_form_DB;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class GetRegId {
+	
+	private static InputFromWebPage inputfromwebpage;
+	
+	private InputFromWebPage(){}
+	
+	public static InputFromWebPage getInputFromWebPage() {
+        if (null == inputfromwebpage) {
+        	inputfromwebpage = new InputFromWebPage();
+        	System.out.println("Creating new instance input web");
+        }
+        return inputfromwebpage;
+    }
+	
+	public String displayRegId(){
+	
+		InputFromWebPage inputwebpage = InputFromWebPage.getInputFromWebPage();
+		InputPayment inputpayment = InputPayment.getInputPayment();
+		
+		ConnectingMySqlDB obj = ConnectingMySqlDB.getConnectingMySqlDB();
+		Connection conn = obj.getConnected();
+		if(conn == null){
+			System.out.println("No Connection to DB");
+		
+		}else{
+				final String QUERY_DISPLAY_REGID = "SELECT regid from registration_list where contact_number="
+						+ ""+inputwebpage.getContactno()+";";
+		
+				try {
+						Statement regidstmt = conn.createStatement();
+						ResultSet regid = regidstmt.executeQuery(QUERY_DISPLAY_REGID);
+						regid.next();
+						
+						inputpayment.setRegid(regid.getString("regid"));
+						
+						String reg_id = regid.getString("regid");
+		                
+						return reg_id;
+						
+				}catch (SQLException e) {
+						e.printStackTrace();
+				}
+		}
+		return "0";
+	}
+}

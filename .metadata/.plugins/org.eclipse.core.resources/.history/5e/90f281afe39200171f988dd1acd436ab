@@ -1,0 +1,43 @@
+package kma_registration_form_DB;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class GetRegId {
+
+	public static InputFromWebPage input = new InputFromWebPage();
+	public static String filePath = "C:/KMAimages/";
+	public String fileName = "";
+	public static int displayRegId(){
+	
+		Connection conn = ConnectingMySqlDB.getConnected();
+		if(conn == null){
+			System.out.println("No Connection to DB");
+		
+		}else{
+				final String QUERY_DISPLAY_REGID = "SELECT regid from registration_list where contact_number="
+						+ ""+InputFromWebPage.getContactno()+";";
+		
+				try {
+						Statement regidstmt = conn.createStatement();
+						ResultSet regid = regidstmt.executeQuery(QUERY_DISPLAY_REGID);
+						regid.next();
+						
+						//System.out.println(Messages.registrationID()+regid.getInt("regid"));
+						InputPayment.setRegid(regid.getString("regid"));
+						
+						String reg_id = regid.getString("regid");
+						
+						
+		                
+						return reg_id;
+						
+				}catch (SQLException e) {
+						e.printStackTrace();
+				}
+		}
+		return 0;
+	}
+}

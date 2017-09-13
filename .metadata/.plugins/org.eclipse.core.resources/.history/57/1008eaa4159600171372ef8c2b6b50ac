@@ -1,0 +1,58 @@
+package kma_registration_form_DB;
+
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class StoringInput {
+
+	public static int flag = 0;
+	public static final String QUERY_INSERT = "INSERT INTO REGISTRATION_LIST(regid, name, dob, personal_emailid, "
+			+ "company_emailid, contact_number, whatsapp_number, options, pp_photo, gender)"
+			+ "VALUES(?,?,?,?,?,?,?,?,?,?)";
+	
+	public static String QUERY_DISPLAY_REGID = null;
+	
+	public static void storeInput(){
+		
+		InputFromWebPage inputwebpage = InputFromWebPage.getInputFromWebPage();
+		InputPayment inputpayment = InputPayment.getInputPayment();
+		
+		String ID = MakeRegID.generateID(InputFromWebPage.getDob().substring(2,4));
+		
+		ConnectingMySqlDB obj = ConnectingMySqlDB.getConnectingMySqlDB();
+		Connection conn = obj.getConnected();
+		if(conn == null){
+			System.out.println("No Connection to DB");
+		}else{
+			try {
+				flag = 0;
+				PreparedStatement preparedstmt = conn.prepareStatement(QUERY_INSERT);
+				preparedstmt.setString(1, ID);
+				preparedstmt.setString(2, InputFromWebPage.getName());
+				preparedstmt.setString(3, InputFromWebPage.getDob());
+				preparedstmt.setString(4, InputFromWebPage.getPemail());
+				preparedstmt.setString(5, InputFromWebPage.getCemail());
+				preparedstmt.setString(6, InputFromWebPage.getContactno());
+				preparedstmt.setString(7, InputFromWebPage.getWano());
+				preparedstmt.setString(8, "xyz");
+				preparedstmt.setBlob(9, InputFromWebPage.getImageAdd());
+				preparedstmt.setString(10, InputFromWebPage.getGender());
+				preparedstmt.executeUpdate();
+				flag = 1;
+				System.out.println(Messages.success());		
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				//System.out.println("PROBLEM IN userinputdb.JAVA");
+				flag = 0;
+				//redirect page to enterd value by use
+				//e.printStackTrace();
+				e.getErrorCode();
+				System.out.println(e);
+				//System.out.println(Messages.invalidDBEntry());
+			}
+		}
+	}
+}
+

@@ -1,0 +1,8 @@
+127.0.0.1 - - [21/Apr/2017:19:07:22 +0530] "GET / HTTP/1.1" 404 992
+0:0:0:0:0:0:0:1 - - [21/Apr/2017:19:07:35 +0530] "GET /KMARegistrationForm/ HTTP/1.1" 200 8678
+0:0:0:0:0:0:0:1 - - [21/Apr/2017:19:07:35 +0530] "GET /KMARegistrationForm/martial_arts-1920x1080.jpg HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [21/Apr/2017:19:07:37 +0530] "GET /favicon.ico HTTP/1.1" 404 1014
+0:0:0:0:0:0:0:1 - - [21/Apr/2017:19:09:35 +0530] "POST /KMARegistrationForm/CheckAvailability HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [21/Apr/2017:19:09:35 +0530] "GET /KMARegistrationForm/recheck.jsp HTTP/1.1" 200 1343
+0:0:0:0:0:0:0:1 - - [21/Apr/2017:19:09:44 +0530] "POST /KMARegistrationForm/StoreData HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [21/Apr/2017:19:09:44 +0530] "GET /KMARegistrationForm/confirmation.jsp HTTP/1.1" 200 1338

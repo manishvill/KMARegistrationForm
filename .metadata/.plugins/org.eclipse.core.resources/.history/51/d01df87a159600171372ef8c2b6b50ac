@@ -1,0 +1,101 @@
+package kma_registration_form_DB;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class StoreData
+ */
+@WebServlet("/StoreData")
+public class StoreData extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public StoreData() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		//Part filePart = null;
+		String errMsg = "SERVER NOT AVAILABLE PLEASE TRY AGAIN LATER";
+		InputFromWebPage inputwebpage = InputFromWebPage.getInputFromWebPage();
+		InputPayment inputpayment = InputPayment.getInputPayment();
+		StoringInput.storeInput();
+		
+		if(StoringInput.flag == 1){
+			StoringPayment.storePaymentDetails();
+			}else{
+				System.out.println("Problem in Registration Details");
+				StoringPayment.flag = 1;
+			}
+						
+				if(StoringInput.flag == 1 && StoringPayment.flag == 1){
+					
+					response.sendRedirect("confirmation.jsp");
+					
+					request.getSession().setAttribute("reg_idval", GetRegId.displayRegId());
+					request.getSession().setAttribute("nameval", inputwebpage.getName());
+					request.getSession().setAttribute("dobval", inputwebpage.getDob());
+					request.getSession().setAttribute("genderval", inputwebpage.getGender());
+					request.getSession().setAttribute("pemailval", inputwebpage.getPemail());
+					request.getSession().setAttribute("cemailval", inputwebpage.getCemail());
+					request.getSession().setAttribute("contactnoval", inputwebpage.getContactno());
+					request.getSession().setAttribute("whatsappnoval", inputwebpage.getWano());
+					//request.getSession().setAttribute("photoval",filePart.getName().toString());
+					
+					request.getSession().setAttribute("paymentmodeval", inputpayment.getPaymentMode());
+					request.getSession().setAttribute("reciptnoval", inputpayment.getReciptNo());
+					request.getSession().setAttribute("transnoval", inputpayment.getTransactionNo());
+					request.getSession().setAttribute("chddnoval", inputpayment.getChqddNo());
+					request.getSession().setAttribute("amountpaidval", inputpayment.getAmountp());
+					request.getSession().setAttribute("amountbalval", inputpayment.getAmountb());
+				
+					
+					
+				}else{
+
+					response.sendRedirect("index2.jsp");
+					
+					request.getSession().setAttribute("nameval", inputwebpage.getName());
+					request.getSession().setAttribute("dobval", inputwebpage.getDob());
+					request.getSession().setAttribute("genderval", inputwebpage.getGender());
+					request.getSession().setAttribute("pemailval", inputwebpage.getPemail());
+					request.getSession().setAttribute("cemailval", inputwebpage.getCemail());
+					request.getSession().setAttribute("contactnoval", inputwebpage.getContactno());
+					request.getSession().setAttribute("whatsappnoval", inputwebpage.getWano());
+					
+					//request.getSession().setAttribute("photoval",filePart.getName()); not working
+					
+					request.getSession().setAttribute("paymentmodeval", inputpayment.getPaymentMode());
+					request.getSession().setAttribute("reciptnoval", inputpayment.getReciptNo());
+					request.getSession().setAttribute("transnoval", inputpayment.getTransactionNo());
+					request.getSession().setAttribute("chddnoval", inputpayment.getChqddNo());
+					request.getSession().setAttribute("amountpaidval", inputpayment.getAmountp());
+					request.getSession().setAttribute("amountbalval", inputpayment.getAmountb());
+					
+					request.getSession().setAttribute("Error",errMsg);
+					
+				}
+	}
+
+}

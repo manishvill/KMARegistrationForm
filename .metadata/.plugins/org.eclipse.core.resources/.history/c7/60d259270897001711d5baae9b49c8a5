@@ -1,0 +1,417 @@
+<%@page import="com.kma.dao.CheckAvailability"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="US-ASCII" %>
+<%
+	CheckAvailability check = new CheckAvailability();
+	request.getSession().setAttribute("nameval", null);
+	request.getSession().setAttribute("Error",null);
+	session.setAttribute("login", null);
+	session.setAttribute("invalid", null);
+%>
+
+<%--check.name = null;check.dob = null;check.gender = null;check.contactno = null;check.wano = null;check.cemail = null;
+check.pemail = null;check.paymentMode = null;check.amtBal = null;check.amtPaid = null;check.chqNo = null;check.transNo = null;
+check.receiptNo = null; --%>
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>KMA Registration Form</title>
+</head>
+
+<body background="martial_arts-1920x1080.jpg" class="body" style="margin: auto;">
+	
+	<h3 align="right" style="margin-right:10vh;"><a style="cursor : pointer;" onclick="window.open('admin.jsp')">Admin</a></h3>
+	
+	<header style="text-align:center;"><h1><b>Registration Form</b></h1></header>
+	
+	<form action="CheckAvailability" enctype="multipart/form-data"  method="POST" >
+	
+	<table class="table" style="margin: auto;" border="1">
+		<tr valign="top">
+			<td><font color="black"><b>Name:<font color="red">*</font></b></font></td>
+			
+<%-- 			<%
+// 				String nameval = "";
+// 				if(session.getAttribute("nameval")!=null){
+// 					Cookie forName = new Cookie("nameval",session.getAttribute("nameval").toString());
+// 					nameval = forName.getValue();
+// 				}%>
+--%>
+			
+			<td><input name="name" type="text" placeholder="Full Name" size=50 class="inputname"
+						title="enter firstname" pattern="[a-zA-Z ]+[a-zA-Z. ]" title="Numbers not allowed" id="name" required>
+		</tr>
+		
+<%-- 			<% 
+// 				String dateval = "";
+// 				if(session.getAttribute("dobval")!=null){
+// 				Cookie forName = new Cookie("dobval",session.getAttribute("dobval").toString());
+// 				dateval = forName.getValue();
+// 				}
+ 			%> --%>
+		
+		<tr valign="top">
+			<td><b>DOB:<font color="red">*</font></b></td>
+			<td><input id="dob" name="dob" type="date" placeholder="dd-MM-yyyy" required/></td>
+		</tr>
+		
+<%-- 			<% 
+// 				String pemailval = "";
+// 					if(session.getAttribute("pemailval")!=null){
+// 						Cookie forName = new Cookie("pemailval",session.getAttribute("pemailval").toString());
+// 						pemailval = forName.getValue();
+// 				}
+ 			%> --%>
+		
+		
+<%--			<%
+				String pemailaval = "";
+				if(session.getAttribute("personal_email") != null){
+					pemailaval = session.getAttribute("personal_email").toString();
+				}
+			%> --%>
+		
+		<tr valign="top">
+			<td><b>Personal E-mail:<font color="red">*</font></b></td>
+			<td><input id="pemail" name="pemail" type="email" placeholder="Personal Email Id" size=50
+						title="Enter valid Email ID" pattern="[a-z0-9._]+@[a-z0-9.-]+\.[a-z]{2,3}$" required>
+						<div id="divpemail"><font color="red"></font></div></td>
+						
+		</tr>
+		
+		
+		
+<%--			<%
+				String cemailval = "";
+				if(session.getAttribute("cemailval")!=null){
+					Cookie forName = new Cookie("cemailval",session.getAttribute("cemailval").toString());
+					cemailval = forName.getValue();
+				}
+			%> --%>
+		
+<%-- 			<%
+				String cemailaval = "";
+				if(session.getAttribute("company_email") != null){
+					cemailaval = session.getAttribute("company_email").toString();
+				}
+			%>--%>
+		
+		<tr valign="top">
+			<td><b>Company E-mail:<font color="red">*</font></b></td>
+			<td><input id="cemail" name="cemail" type="email" placeholder="Company Email Id" size=50		
+						title="Enter valid Email ID" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required>
+				<input name="sameasaboveemail" type="checkbox" placeholder="Same as peronsal Email ID" onclick="copyvaluemail();">Same as above	
+				<div id="divcemail"></div>
+				
+			</td>
+		</tr>
+		
+			
+			
+		
+		<tr valign="top">
+			<td><b>Contact Number:<font color="red">*</font></b></td>
+			<td><select id="cnumpre" name="cc" size=1>
+					<option value="+91">+91</option>
+				</select>
+		
+		
+		
+<%-- 			<%
+				String contactval = "";
+				if(session.getAttribute("contactnoval")!=null){
+				Cookie forName = new Cookie("contactnoval",session.getAttribute("contactnoval").toString());
+				contactval = forName.getValue();
+				}
+			%>
+			
+			<%
+				String contactaval = "";
+				if(session.getAttribute("contactnoa") != null){
+					contactaval = session.getAttribute("contactnoa").toString();
+				}
+			%>--%>
+		
+			<input id="cnum" name="contactno" type="text" placeholder="Mobile Number"
+					   	pattern="[7-9]{1}[0-9]{9}"
+					    title="Invalid Contact Number" maxlength="10" required>
+					    <div id="pcontact"><font color="red"></font></div></td>
+		</tr>
+
+
+		<tr valign="top">
+			<td><b>What'sapp Number:<font color="red">*</font></b></td>
+			<td><select id="wnumpre" name="cc" size=1>
+					<option value="+91">+91</option>
+				</select>
+
+			<%--<%
+				String waval = "";
+				if(session.getAttribute("whatsappnoval")!=null){
+				Cookie forName = new Cookie("whatsappnoval",session.getAttribute("whatsappnoval").toString());
+				waval = forName.getValue();
+				}
+			
+			
+			
+			<%
+				String waaval = "";
+				if(session.getAttribute("whatsappnoa") != null){
+					waaval = session.getAttribute("whatsappnoa").toString();
+				}
+			%>--%>
+
+			<input id="wnum" name="whatsappno" type="text" placeholder="What'sapp Number"
+					    pattern="[7-9]{1}[0-9]{9}"
+					    
+					    title="Invalid What's app Number" maxlength="10" required>
+					    <input name="sameasaboveemail" type="checkbox"
+					     placeholder="Same as contact number" onclick="copyvaluecontact();">Same as above
+					    <div id="wcontact"><font color="red"></font></div></td>
+		</tr>
+	
+		
+	<%-- 		<%
+				String gender = "";
+				String genderm = "";
+				String genderf= "";
+				String gendero = "";
+				if(session.getAttribute("genderval")!=null){
+					Cookie forName = new Cookie("genderval",session.getAttribute("genderval").toString());
+					gender = forName.getValue();
+				}
+				
+				if(gender.contains("Male")){
+					genderm="checked";
+				}else{
+					genderm="";
+					if(gender.contains("Female")){
+						genderf="checked";
+						}else{
+							genderf="";
+							if(gender.contains("Others")){
+								gendero="checked";
+							}else{
+								gendero="";}
+							}
+					}
+			%>--%>
+		
+	
+	
+		<tr valign="top">
+			<td><b>Gender:<font color="red">*</font></b></td>
+			<td><input id="mgender" type="radio" name="gender" value="Male"  required>Male
+			<input id="fgender" type="radio" name="gender" value="Female"  >Female
+			<input id="ogender" type="radio" name="gender" value="Others" >Others</td>
+		</tr>
+	
+		<tr valign="top">
+			<td><b>Payment Details:<font color="red">*</font></b></td>
+				<td>
+					<script type="text/javascript">
+        				function showcash() { document.getElementById('rcptno').style.display = 'block';
+        				   	document.getElementById('amtp').style.display = 'block';
+        				   	document.getElementById('amtb').style.display = 'block';
+       				   	   	document.getElementById('chddno').style.display = 'none';
+       				   		document.getElementById('trnsno').style.display = 'none';
+       				   		document.getElementById('chddno').value = null;
+       				 		document.getElementById('trnsno').value = null;
+       						document.getElementById('rcptno').required = "required";
+ 				   			document.getElementById('amtp').required = "required";
+ 				  			document.getElementById('amtb').required = "required";
+    				   		document.getElementById('chddno').required = false;
+       				   		document.getElementById('trnsno').required = false;}
+       					   
+        		
+        				function showcard() { document.getElementById('rcptno').style.display = 'block';
+						   	document.getElementById('chddno').style.display = 'none';
+						   	document.getElementById('amtp').style.display = 'block';
+        				   	document.getElementById('amtb').style.display = 'block';
+       				   	   	document.getElementById('trnsno').style.display = 'block';
+       				   		document.getElementById('chddno').value = null;
+       				   		document.getElementById('trnsno').value = null;
+       				   		document.getElementById('rcptno').required = "required";
+					   		document.getElementById('amtp').required = "required";
+    				   		document.getElementById('amtb').required = "required";
+    				   		document.getElementById('trnsno').required = "required";
+    				   		document.getElementById('chddno').required = false;}
+        		
+        				function showchqdd() { document.getElementById('rcptno').style.display = 'block';
+				   			document.getElementById('trnsno').style.display = 'none';
+				   			document.getElementById('amtp').style.display = 'block';
+				   			document.getElementById('amtb').style.display = 'block';
+			   	   			document.getElementById('chddno').style.display = 'block';
+			   				document.getElementById('rcptno').required = "required";
+				   			document.getElementById('trnsno').value = null;
+				   			document.getElementById('chddno').value = null;
+				   			document.getElementById('amtp').required = "required";
+				   			document.getElementById('amtb').required = "required";
+			   	   			document.getElementById('chddno').required = "required";
+			   	   			document.getElementById('trnsno').required = false;
+			   	   			}
+        				
+        				function copyvaluemail(){
+        					if(document.getElementById('cemail').value == ""){
+        					document.getElementById('cemail').value = document.getElementById('pemail').value;
+        					}else{
+        						document.getElementById('cemail').value = null;
+        					}
+        				}
+        				
+        				function copyvaluecontact(){
+        					if(document.getElementById('wnum').value == ""){
+            					document.getElementById('wnum').value = document.getElementById('cnum').value;
+            					}else{
+            						document.getElementById('wnum').value = null;
+            					}
+        				}
+
+      			</script>
+ 				
+ 			     		
+ 			    <%--
+					String paymentmode = "";
+					if(session.getAttribute("paymentmodeval")!=null){
+						Cookie forName = new Cookie("paymentmodeval",session.getAttribute("paymentmodeval").toString());
+						paymentmode = forName.getValue();
+					}
+				--%> 		
+				
+				
+<%-- 				<%
+				String paymenttype = "";
+				String cash = "";
+				String card = "";
+				String chdd = "";
+				if(session.getAttribute("paymentmodeval")!=null){
+					Cookie forName = new Cookie("paymentmodeval",session.getAttribute("paymentmodeval").toString());
+					paymenttype = forName.getValue();
+				}
+				
+				if(paymenttype.contains("Cash")){
+					cash="checked";
+				}else{
+					cash="";
+					if(paymenttype.contains("Card")){
+						card="checked";
+						}else{
+							card="";
+							if(paymenttype.contains("Cheque/DD")){
+								chdd="checked";
+							}else{
+								chdd="";}
+							}
+					}
+			%>--%>
+ 			     		
+ 			     		
+     	 		<input id="cshpaymentmode" type="radio" name="payment"
+     	 		 value="Cash" onclick="showcash();"  required>Cash
+	 			<input id="crdpaymentmode" type="radio" name="payment" 
+	 			value="Card" onclick="showcard();"  >Card
+	  			<input id="chddpaymentmode" type="radio" name="payment" 
+	  			value="Cheque/DD" onclick="showchqdd();"  >Cheque/DD
+	  		
+	  			
+	  			<%--
+					String recval = "";
+					if(session.getAttribute("reciptval")!=null){
+						Cookie forName = new Cookie("reciptval",session.getAttribute("reciptval").toString());
+						recval = forName.getValue();
+					}
+				--%>
+	  		
+	  		
+        		<div><input name="rcptno" type="text" id="rcptno" style="display: none;"  
+        		placeholder="Slip/Receipt Number" maxlength="30" >
+        		
+        		</div>
+        	
+        	
+        		<%--
+					String transval = "";
+					if(session.getAttribute("transnoval")!=null){
+						Cookie forName = new Cookie("transnoval",session.getAttribute("transnoval").toString());
+						transval = forName.getValue();
+					}
+				--%>
+        	
+        		<input type="text" id="trnsno" style="display: none;" value="" 
+        		name="transno" placeholder="Transaction ID" maxlength="30">               
+        		
+        		<%--
+					String chddval = "";
+					if(session.getAttribute("chddnoval")!=null){
+						Cookie forName = new Cookie("chddnoval",session.getAttribute("chddnoval").toString());
+						chddval = forName.getValue();
+					}
+				--%>
+        		
+        		<input type="text" id="chddno" style="display: none;" value="" 
+        		name="chddno" placeholder="Cheque/DD Number" maxlength="30" >
+        		
+        		<%--
+					String amtpval = "";
+					if(session.getAttribute("amountpaidval")!=null){
+						Cookie forName = new Cookie("amountpaidval",session.getAttribute("amountpaidval").toString());
+						amtpval = forName.getValue();
+					}
+				--%>	
+        			
+        		<input type="number" id="amtp" style="display: none;" 
+        		name="amtp" placeholder="Amount Paid">
+        		
+        		<%--
+					String amtbval = "";
+					if(session.getAttribute("amountbalval")!=null){
+						Cookie forName = new Cookie("amountbalval",session.getAttribute("amountbalval").toString());
+						amtbval = forName.getValue();
+					}
+				--%>
+        		
+        		<input type="number" id="amtb" style="display: none;" 
+        		name="amtb" placeholder="Amount Balance">
+        	</td>	
+		</tr>
+
+	
+	
+	
+				<%--
+					String imgval = "";
+					if(session.getAttribute("photoval")!=null){
+						Cookie forName = new Cookie("photoval",session.getAttribute("photoval").toString());
+						imgval = forName.getValue();
+					}
+				--%>
+		
+		<tr valign="top">
+			<td colspan=2>
+				<font size=1>
+					<b>Upload Passport size photo:</b></font>
+				
+				<input id="photo" name="photo" type="file" accept="image/*">
+				</td>
+			
+		</tr>
+	
+		<tr valign="top">
+			<td colspan=2>
+			<font size=-1>
+				<input id="chkbox" name="check" type="checkbox" value="2" required><font color="red">*</font>Agree to SUBMIT.</font></td>
+		</tr>
+
+		<tr valign="top">
+			<td>&nbsp;</td>
+			<td>
+				<input id="sub" type="submit" value="SUBMIT">
+				<input id="rex" type="reset" value="RESET" ></td>
+		</tr>
+	
+	</table>
+	</form>
+</body>
+</html>

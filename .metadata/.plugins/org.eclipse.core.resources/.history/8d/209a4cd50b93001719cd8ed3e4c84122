@@ -1,0 +1,38 @@
+package kma_registration_form_DB;
+
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class GetLastRegID {
+	
+	static Connection connect = ConnectingMySqlDB.getConnected();
+	static String getlastID() {
+			String ID = "KMAXXXXXXX0";
+			String QUERY_GET_REGID_TEMP = "SELECT * from registration_list;";
+			String QUERY_GET_REGID_FINAL = "SELECT * from registered_user;";
+			
+			try {
+						Statement regidstmt = connect.createStatement();
+						ResultSet result = regidstmt.executeQuery(QUERY_GET_REGID_FINAL);
+						
+						if (result.last()) {
+								ID = result.getString("regid");
+						} else{
+								while (result.next()) {
+										if(result.isLast()) {
+												ID = result.getString("regid");
+										}
+								}
+						}
+						
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return "problem";
+				}
+			return ID;
+	}
+
+}

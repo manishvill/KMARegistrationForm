@@ -1,0 +1,36 @@
+package kma_registration_form_DB;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class CreatingDB {
+	
+	public static final String CREATE_DB = "kmaregistrations";
+	public static final String QUERY = "CREATE DATABASE if not exists "+CREATE_DB+";";
+	
+	
+	public static Connection create_database(){
+	
+		ConnectingMySqlDB obj = ConnectingMySqlDB.getConnectingMySqlDB();
+		Connection conn = obj.getConnected();
+        Statement statement = null;
+        
+		try {
+			statement = conn.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
+        try {
+        	statement.executeQuery(QUERY);
+        	return conn;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			return null;
+			//e.printStackTrace();
+		}
+	}
+}

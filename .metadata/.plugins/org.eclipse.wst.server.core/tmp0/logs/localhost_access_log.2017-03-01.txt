@@ -1,0 +1,5 @@
+127.0.0.1 - - [01/Mar/2017:00:06:52 +0530] "GET / HTTP/1.1" 404 992
+0:0:0:0:0:0:0:1 - - [01/Mar/2017:00:06:54 +0530] "GET /KMARegistrationForm/index.jsp HTTP/1.1" 200 273
+127.0.0.1 - - [01/Mar/2017:18:50:03 +0530] "GET / HTTP/1.1" 404 992
+0:0:0:0:0:0:0:1 - - [01/Mar/2017:18:50:07 +0530] "GET /KMARegistrationForm/WEB-INF/classes/kma_registration_form_DB/CreatingDB.java HTTP/1.1" 404 990
+0:0:0:0:0:0:0:1 - - [01/Mar/2017:18:50:26 +0530] "GET /KMARegistrationForm/index.jsp HTTP/1.1" 200 273

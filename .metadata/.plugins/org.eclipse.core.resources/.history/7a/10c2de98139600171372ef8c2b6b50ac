@@ -1,0 +1,72 @@
+package kma_registration_form_DB;
+
+
+public class InputPayment {
+
+	public String regid;
+	public String paymentMode = null;
+	public String reciptNo = null;
+	public String transactionNo = null;
+	public String chqddNo = null;
+	public String amountp = null;
+	public String amountb = null;
+	
+	
+	
+	public String getChqddNo() {
+		return this.chqddNo;
+	}
+
+
+	public void setChqddNo(String chqddNo) {
+		this.chqddNo = chqddNo;
+	}
+	
+	public String getRegid() {
+		return this.regid;
+	}
+
+	public void setRegid(String regid) {
+		this.regid = regid;
+	}
+
+	public String getPaymentMode() {
+		return this.paymentMode;
+	}
+
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
+	}
+
+	public String getReciptNo() {
+		return this.reciptNo;
+	}
+
+	public void setReciptNo(String reciptNo) {
+		this.reciptNo = reciptNo;
+	}
+
+	public String getTransactionNo() {
+		return this.transactionNo;
+	}
+
+	public void setTransactionNo(String transactionNo) {
+		this.transactionNo = transactionNo;
+	}
+
+	public String getAmountp() {
+		return this.amountp;
+	}
+
+	public void setAmountp(String amount) {
+		this.amountp = amount;
+	}
+
+	public String getAmountb() {
+		return this.amountb;
+	}
+
+	public void setAmountb(String amount) {
+		this.amountb = amount;
+	}
+}

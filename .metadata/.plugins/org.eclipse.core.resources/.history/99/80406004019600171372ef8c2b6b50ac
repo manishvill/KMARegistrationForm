@@ -1,0 +1,53 @@
+package kma_registration_form_DB;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class StoringPayment {
+	
+
+	public static ConnectingMySqlDB dbs = new ConnectingMySqlDB();
+	public static InputFromWebPage input = new InputFromWebPage();
+	public static int flag = 0;
+	public static final String QUERY_INSERT = "INSERT INTO payment_details"
+			+ "(regid, payment_mode, recipt_no, transaction_no, chqDDno, amount_paid, amount_bal)"
+			+ "VALUES(?,?,?,?,?,?,?)";
+	
+	public static void storePaymentDetails(){
+		
+		ConnectingMySqlDB obj = ConnectingMySqlDB.getConnectingMySqlDB();
+		Connection conn = obj.getConnected();
+		if(conn == null){
+			System.out.println("No Connection to DB");
+			
+		}else{
+			
+			PreparedStatement preparedstmt;
+			try {
+				flag = 0;
+				preparedstmt = conn.prepareStatement(QUERY_INSERT);
+			
+				preparedstmt.setString(1, GetRegId.displayRegId());
+				preparedstmt.setString(2, InputPayment.getPaymentMode());
+				preparedstmt.setString(3, InputPayment.getReciptNo());
+				preparedstmt.setString(4, InputPayment.getTransactionNo());
+				preparedstmt.setString(5, InputPayment.getChqddNo());
+				preparedstmt.setString(6, InputPayment.getAmountp());
+				preparedstmt.setString(7, InputPayment.getAmountb());
+				
+				
+				preparedstmt.executeUpdate();
+				flag = 1;
+				System.out.println(Messages.paymentsuccess());
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				flag = 0;
+				e.printStackTrace();
+			}
+				
+		}
+	}
+
+}

@@ -1,0 +1,100 @@
+<%@page import="kma_registration_form_DB.InputPayment"%>
+<%@page import="java.io.OutputStream"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="kma_registration_form_DB.ConnectingMySqlDB"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="US-ASCII" %>
+<%--if(session.getAttribute("nameval")==null){
+	response.sendRedirect("index2.jsp");
+}--%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<table class="table" style="margin: auto;" border="1">
+
+<tr>
+	<th rowspan="1" >Personal Details</th>
+</tr>
+
+<tr>
+	<td>Name :</td>
+	<td><%= session.getAttribute("nameval"+session.getAttribute("session_id")) %></td>
+</tr>
+
+<tr>
+	<td>Date of Birth :</td> 
+	<td><%= session.getAttribute("dobval") %></td>
+</tr>
+
+<tr>
+	<td>Gender :</td>
+	<td><%= session.getAttribute("genderval") %></td>
+</tr>
+
+<tr>
+	<td>Personal Email ID :</td>
+	<td><%= session.getAttribute("pemailval") %></td>
+</tr>
+
+<tr>
+	<td>Company Email ID :</td>
+	<td><%= session.getAttribute("cemailval") %></td>
+</tr>
+
+<tr>
+	<td>Contact Number :</td>
+	<td><%= session.getAttribute("contactnoval") %></td>
+</tr>
+
+<tr>
+	<td>What's App Number : </td>
+	<td><%= session.getAttribute("whatsappnoval") %></td>
+</tr>
+
+<tr>
+	<th>Payment Details :</th>
+</tr>
+
+<tr>
+	<td>Payment Mode :</td>
+	<td><%= session.getAttribute("paymentmodeval") %></td>
+</tr>
+
+<tr>
+	<td>Receipt Number :</td>
+	<td><%= session.getAttribute("reciptnoval") %></td>
+</tr>
+
+<% if(!session.getAttribute("transnoval").toString().contains("null")){
+	out.print("<tr><td>Transaction No :</td><td>"+session.getAttribute("transnoval")+"</td></tr>");
+	}
+%>
+
+<% if(!session.getAttribute("chddnoval").toString().contains("null")){
+	out.print("<tr><td>Cheque/DD No :</td><td>"+session.getAttribute("chddnoval")+"</td></tr>");}
+%>
+
+<tr>
+	<td>Amount Paid :</td>
+	<td><%= session.getAttribute("amountpaidval") %></td>
+</tr>
+
+<tr>
+	<td>Amount Balance :</td>
+	<td><%= session.getAttribute("amountbalval") %></td>
+</tr>
+
+<tr>
+	<td align="center">
+		<button onclick="window.location.replace('index2.jsp')">Edit</button>
+		<form action="StoreData" method="POST"><button type="submit">Submit</button></form>
+		<button onclick="window.location.replace('index.jsp')">Cancel</button></td>
+</tr>
+</table>
+</body>
+</html>

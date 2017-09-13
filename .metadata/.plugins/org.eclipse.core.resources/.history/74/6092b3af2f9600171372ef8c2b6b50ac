@@ -1,0 +1,207 @@
+package kma_registration_form_DB;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class StoreData
+ */
+@WebServlet("/StoreData")
+public class StoreData extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public StoreData() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		//Part filePart = null;
+		String errMsg = "SERVER NOT AVAILABLE PLEASE TRY AGAIN LATER";
+		InputFromWebPage inputwebpage = InputFromWebPage.getInputFromWebPage();
+		InputPayment inputpayment = InputPayment.getInputPayment();
+		//GetRegId getID = GetRegId.getGetRegId();
+		
+		
+		
+		
+		int flag = 0;
+		int flagp = 0;
+		String QUERY_INSERT = "INSERT INTO REGISTRATION_LIST(regid, name, dob, personal_emailid, "
+				+ "company_emailid, contact_number, whatsapp_number, options, pp_photo, gender)"
+				+ "VALUES(?,?,?,?,?,?,?,?,?,?)";
+		
+		String ID = MakeRegID.generateID(request.getSession().getAttribute("dobval").toString().substring(2,4));
+		
+		ConnectingMySqlDB obj = ConnectingMySqlDB.getConnectingMySqlDB();
+		Connection conn = obj.getConnected();
+		if(conn == null){
+			System.out.println("No Connection to DB");
+		}else{
+			try {
+				flag = 0;
+				PreparedStatement preparedstmt = conn.prepareStatement(QUERY_INSERT);
+				preparedstmt.setString(1, ID);
+				preparedstmt.setString(2, request.getSession().getAttribute("nameval").toString());
+				preparedstmt.setString(3, request.getSession().getAttribute("dobval").toString());
+				preparedstmt.setString(4, request.getSession().getAttribute("pemailval").toString());
+				preparedstmt.setString(5, request.getSession().getAttribute("cemailval").toString());
+				preparedstmt.setString(6, request.getSession().getAttribute("contactnoval").toString());
+				preparedstmt.setString(7, request.getSession().getAttribute("whatsappnoval").toString());
+				preparedstmt.setString(8, "xyz");
+				preparedstmt.setBlob(9, (InputStream) request.getSession().getAttribute("pp_image"));
+				preparedstmt.setString(10, request.getSession().getAttribute("genderval").toString());
+				preparedstmt.executeUpdate();
+				flag = 1;
+				System.out.println(Messages.success());		
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				//System.out.println("PROBLEM IN userinputdb.JAVA");
+				flag = 0;
+				//redirect page to enterd value by use
+				//e.printStackTrace();
+				e.getErrorCode();
+				System.out.println(e);
+				//System.out.println(Messages.invalidDBEntry());
+			}
+		}
+		
+
+		
+		
+		if(flag == 1){
+			
+			
+			flagp = 0;
+			QUERY_INSERT = "INSERT INTO payment_details"
+					+ "(regid, payment_mode, recipt_no, transaction_no, chqDDno, amount_paid, amount_bal)"
+					+ "VALUES(?,?,?,?,?,?,?)";
+			
+			
+			if(conn == null){
+				System.out.println("No Connection to DB");
+			}else{
+				PreparedStatement preparedstmt;
+				try {
+					flagp = 0;
+					preparedstmt = conn.prepareStatement(QUERY_INSERT);
+				
+					preparedstmt.setString(1, ID);
+					preparedstmt.setString(2, request.getSession().getAttribute("paymentmodeval").toString());
+					preparedstmt.setString(3, request.getSession().getAttribute("reciptnoval").toString());
+					preparedstmt.setString(4, request.getSession().getAttribute("transnoval").toString());
+					preparedstmt.setString(5, request.getSession().getAttribute("chddnoval").toString());
+					preparedstmt.setString(6, request.getSession().getAttribute("amountpaidval").toString());
+					preparedstmt.setString(7, request.getSession().getAttribute("amountbalval").toString());
+					
+					
+					preparedstmt.executeUpdate();
+					flagp = 1;
+					System.out.println(Messages.paymentsuccess());
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					flagp = 0;
+					e.printStackTrace();
+				}
+					
+			}
+			
+			
+			}else{
+				System.out.println("Problem in Registration Details");
+				flag = 1;
+			}
+						
+				if(flag == 1 && flagp == 1){
+					
+					response.sendRedirect("confirmation.jsp");
+					
+					request.getSession().setAttribute("reg_idval", ID);
+					request.getSession().setAttribute("nameval", request.getSession().getAttribute("nameval").toString());
+					request.getSession().setAttribute("dobval", request.getSession().getAttribute("dobval").toString());
+					request.getSession().setAttribute("genderval", request.getSession().getAttribute("genderval").toString());
+					request.getSession().setAttribute("pemailval", request.getSession().getAttribute("pemailval").toString());
+					request.getSession().setAttribute("cemailval", request.getSession().getAttribute("cemailval").toString());
+					request.getSession().setAttribute("contactnoval", request.getSession().getAttribute("contactnoval").toString());
+					request.getSession().setAttribute("whatsappnoval", request.getSession().getAttribute("whatsappnoval").toString());
+					//request.getSession().setAttribute("photoval",filePart.getName().toString());
+					
+					request.getSession().setAttribute("paymentmodeval", request.getSession().getAttribute("paymentmodeval").toString());
+					request.getSession().setAttribute("reciptnoval", request.getSession().getAttribute("reciptnoval").toString());
+					request.getSession().setAttribute("transnoval", request.getSession().getAttribute("transnoval").toString());
+					request.getSession().setAttribute("chddnoval", request.getSession().getAttribute("chddnoval").toString());
+					request.getSession().setAttribute("amountpaidval", request.getSession().getAttribute("amountpaidval").toString());
+					request.getSession().setAttribute("amountbalval", request.getSession().getAttribute("amountbalval").toString());
+				
+					
+					
+				}else{
+
+					response.sendRedirect("index2.jsp");
+					
+					
+					request.getSession().setAttribute("nameval", request.getSession().getAttribute("nameval"));
+					request.getSession().setAttribute("dobval", request.getSession().getAttribute("nameval"));
+					request.getSession().setAttribute("genderval", request.getSession().getAttribute("genderval"));
+					request.getSession().setAttribute("pemailval", request.getSession().getAttribute("pemailval"));
+					request.getSession().setAttribute("cemailval", request.getSession().getAttribute("cemailval"));
+					request.getSession().setAttribute("contactnoval", request.getAttribute("contactnoval"));
+					request.getSession().setAttribute("whatsappnoval", request.getSession().getAttribute("whatsappnoval"));
+					request.getSession().setAttribute("pp_image", request.getSession().getAttribute("pp_image"));
+					
+					request.getSession().setAttribute("paymentmodeval", request.getSession().getAttribute("paymentmodeval"));
+					request.setAttribute("reciptnoval", request.getSession().getAttribute("reciptnoval"));
+					request.getSession().setAttribute("transnoval", request.getSession().getAttribute("transnoval"));
+					request.getSession().setAttribute("chddnoval", request.getSession().getAttribute("chddnoval"));
+					request.getSession().setAttribute("amountpaidval", request.getSession().getAttribute("amountpaidval"));
+					request.getSession().setAttribute("amountbalval", request.getSession().getAttribute("amountbalval"));
+					
+//					request.getSession().setAttribute("nameval", inputwebpage.getName());
+//					request.getSession().setAttribute("dobval", inputwebpage.getDob());
+//					request.getSession().setAttribute("genderval", inputwebpage.getGender());
+//					request.getSession().setAttribute("pemailval", inputwebpage.getPemail());
+//					request.getSession().setAttribute("cemailval", inputwebpage.getCemail());
+//					request.getSession().setAttribute("contactnoval", inputwebpage.getContactno());
+//					request.getSession().setAttribute("whatsappnoval", inputwebpage.getWano());
+//					
+//					//request.getSession().setAttribute("photoval",filePart.getName()); not working
+//					
+//					request.getSession().setAttribute("paymentmodeval", inputpayment.getPaymentMode());
+//					request.getSession().setAttribute("reciptnoval", inputpayment.getReciptNo());
+//					request.getSession().setAttribute("transnoval", inputpayment.getTransactionNo());
+//					request.getSession().setAttribute("chddnoval", inputpayment.getChqddNo());
+//					request.getSession().setAttribute("amountpaidval", inputpayment.getAmountp());
+//					request.getSession().setAttribute("amountbalval", inputpayment.getAmountb());
+					
+					request.getSession().setAttribute("Error",errMsg);
+					
+				}
+	}
+
+}

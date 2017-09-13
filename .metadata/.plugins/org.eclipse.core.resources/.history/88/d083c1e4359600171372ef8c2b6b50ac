@@ -1,0 +1,525 @@
+<%@page import="org.omg.CORBA.portable.ResponseHandler"%>
+<%@page import="org.omg.CORBA.Request"%>
+<%@page import="java.io.PrintWriter"%>
+<%@page import="kma_registration_form_DB.CheckAvailability"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="kma_registration_form_DB.ConnectingMySqlDB"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.io.File"%>
+<%@page import="kma_registration_form_DB.InputFromWebPage"%>
+<%@page import="kma_registration_form_DB.InputValidation"%>
+<%@page import="javax.servlet.http.HttpServletRequest"%>
+<%@page import="javax.servlet.http.HttpServletResponse"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="US-ASCII" %>
+<% if(session.getAttribute("nameval")==null){
+	response.sendRedirect("index.jsp");
+} %>    
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>KMA Registration Form</title>
+</head>
+
+<body background="martial_arts-1920x1080.jpg" class="body">
+
+
+	<header style="text-align:center;"><h1><b>Registration Form</b></h1></header>
+	
+		
+	<form action="CheckAvailability" enctype="multipart/form-data"  method="POST" >
+	
+	<table class="table" style="margin: auto;" border="1">
+		<tr valign="top">
+			<td><font color="black"><b>Name:<font color="red">*</font></b></font></td>
+			
+ 			<%
+ 				String nameval = "";
+ 				if(session.getAttribute("nameval")!=null){
+ 					Cookie forName = new Cookie("nameval",session.getAttribute("nameval").toString());
+ 					nameval = forName.getValue();
+ 				}
+ 			%>
+
+			
+			<td><input name="name" type="text" placeholder="Full Name" size=50 class="inputname"
+						value="<%out.print(nameval); %>"
+						title="enter firstname" pattern="[a-zA-Z ]+[a-zA-Z. ]" title="Numbers not allowed" id="name" required>
+						<%
+							if(session.getAttribute("invalidname")!=null){
+								out.println(session.getAttribute("invalidname"));
+							}
+						%></td>
+		</tr>
+		
+ 			<% 
+ 				String dateval = "";
+ 				if(session.getAttribute("dobval")!=null){
+ 				Cookie forName = new Cookie("dobval",session.getAttribute("dobval").toString());
+ 				dateval = forName.getValue();
+ 				}
+ 			%>
+		
+		<tr valign="top">
+			<td><b>DOB:<font color="red">*</font></b></td>
+			<td><input id="dob" name="dob" type="date" value="<%out.print(dateval); %>" required/></td>
+		</tr>
+		
+ 			<% 
+ 				String pemailval = "";
+ 					if(session.getAttribute("pemailval")!=null){
+						Cookie forName = new Cookie("pemailval",session.getAttribute("pemailval").toString());
+ 						pemailval = forName.getValue();
+ 				}
+ 			%>
+		
+		
+			<%
+				String pemailaval = "";
+				if(session.getAttribute("personal_email") != null){
+					pemailaval = session.getAttribute("personal_email").toString();
+				}
+			%>
+		
+		<tr valign="top">
+			<td><b>Personal E-mail:<font color="red">*</font></b></td>
+			<td><input id="pemail" name="pemail" type="email" placeholder="Personal Email Id" size=50
+						value="<%out.print(pemailval); %>"
+						title="Enter valid Email ID" pattern="[a-z0-9._]+@[a-z0-9.-]+\.[a-z]{2,3}$" required>
+						<font style="color:red" ><%out.print(pemailaval); %></font>
+						<div id="divpemail"><font color="red"></font></div>
+						<%
+							if(session.getAttribute("invalidpemail")!=null){
+								out.println(session.getAttribute("invalidpemail"));
+							}
+						%></td>
+		</tr>
+		
+		
+		
+			<%
+				String cemailval = "";
+				if(session.getAttribute("cemailval")!=null){
+					Cookie forName = new Cookie("cemailval",session.getAttribute("cemailval").toString());
+					cemailval = forName.getValue();
+				}
+			%>
+		
+ 			<%
+				String cemailaval = "";
+				if(session.getAttribute("company_email") != null){
+					cemailaval = session.getAttribute("company_email").toString();
+				}
+			%>
+		
+		<tr valign="top">
+			<td><b>Company E-mail:<font color="red">*</font></b></td>
+			<td><input id="cemail" name="cemail" type="email" placeholder="Company Email Id" size=50
+						value="<%out.print(cemailval); %>"		
+						title="Enter valid Email ID" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required>
+						<font style="color:red" ><%out.print(cemailaval); %></font>
+						<div id="divcemail"></div>
+						<%
+							if(session.getAttribute("invalidcemail")!=null){
+								out.println(session.getAttribute("invalidcemail"));
+							}
+						%>
+			</td>
+		</tr>
+		
+			
+			
+		
+		<tr valign="top">
+			<td><b>Contact Number:<font color="red">*</font></b></td>
+			<td><select id="cnumpre" name="cc" size=1>
+					<option value="+91">+91
+				</select>
+		
+		
+		
+ 			<%
+				String contactval = "";
+				if(session.getAttribute("contactnoval")!=null){
+				Cookie forName = new Cookie("contactnoval",session.getAttribute("contactnoval").toString());
+				contactval = forName.getValue();
+				}
+			%>
+			
+			<%
+				String contactaval = "";
+				if(session.getAttribute("contactnoa") != null){
+					contactaval = session.getAttribute("contactnoa").toString();
+				}
+			%>
+					
+			<input id="cnum" name="contactno" type="text" placeholder="Mobile Number"
+					   	pattern="[7-9]{1}[0-9]{9}"
+					    value="<%out.print(contactval); %>"
+					    title="Invalid Contact Number" maxlength="10" required>
+					    <font style="color:red" ><%out.print(contactaval); %></font>
+					    <div id="pcontact"><font color="red"></font></div>
+					    <%
+							if(session.getAttribute("invalidcont")!=null){
+								out.println(session.getAttribute("invalidcont"));
+							}
+						%></td>
+		</tr>
+
+
+		<tr valign="top">
+			<td><b>What'sapp Number:<font color="red">*</font></b></td>
+			<td><select id="wnumpre" name="cc" size=1>
+					<option value="+91">+91
+				</select>
+
+			<%
+				String waval = "";
+				if(session.getAttribute("whatsappnoval")!=null){
+					Cookie forName = new Cookie("whatsappnoval",session.getAttribute("whatsappnoval").toString());
+					waval = forName.getValue();
+				}
+			
+			%>
+			
+			<%
+				String waaval = "";
+				if(session.getAttribute("whatsappnoa") != null){
+					waaval = session.getAttribute("whatsappnoa").toString();
+				}
+			%>
+
+			<input id="wnum" name="whatsappno" type="text" placeholder="What'sapp Number"
+					    pattern="[7-9]{1}[0-9]{9}"
+						value="<%out.print(waval); %>"    
+					    title="Invalid What's app Number" maxlength="10" required>
+					    <font style="color:red" ><%out.print(waaval); %></font>
+					    <div id="wcontact"><font color="red"></font></div>
+					     <%
+							if(session.getAttribute("invalidwano")!=null){
+								out.println(session.getAttribute("invalidwano"));
+							}
+						%></td>
+		</tr>
+	
+		
+	 		<%
+				String gender = "";
+				String genderm = "";
+				String genderf= "";
+				String gendero = "";
+				if(session.getAttribute("genderval")!=null){
+					Cookie forName = new Cookie("genderval",session.getAttribute("genderval").toString());
+					gender = forName.getValue();
+				}
+				
+				if(gender.contains("Male")){
+					genderm="checked";
+				}else{
+					genderm="";
+					if(gender.contains("Female")){
+						genderf="checked";
+						}else{
+							genderf="";
+							if(gender.contains("Others")){
+								gendero="checked";
+							}else{
+								gendero="";}
+							}
+					}
+			%>
+		
+	
+	
+		<tr valign="top">
+			<td><b>Gender:<font color="red">*</font></b></td>
+			<td><input id="mgender" type="radio" name="gender" value="Male" <%out.print(genderm); %> required>Male
+			<input id="fgender" type="radio" name="gender" value="Female" <%out.print(genderf); %> >Female
+			<input id="ogender" type="radio" name="gender" value="Others" <%out.print(gendero); %> >Others
+			<%
+				if(session.getAttribute("invalidgen")!=null){
+					out.println("<br>" + session.getAttribute("invalidgen"));
+				}
+			%>
+			</td>
+		</tr>
+	
+		<tr valign="top">
+			<td><b>Payment Details:<font color="red">*</font></b></td>
+				<td>
+					<script type="text/javascript">
+        				function showcash() { 
+        					document.getElementById('rcptno').style.display = 'block';
+        				   	document.getElementById('amtp').style.display = 'block';
+        				   	document.getElementById('amtb').style.display = 'block';
+       				   	   	document.getElementById('chddno').style.display = 'none';
+       				   		document.getElementById('trnsno').style.display = 'none';
+       				   		
+       				   		document.getElementById('chddno').value = null;
+   				   			document.getElementById('trnsno').value = null;
+   				   			
+       						document.getElementById('rcptno').required = "required";
+ 				   			document.getElementById('amtp').required = "required";
+ 				  			document.getElementById('amtb').required = "required";
+    				   		document.getElementById('chddno').required = false;
+       				   		document.getElementById('trnsno').required = false;
+       				   	}
+       					   
+        		
+        				function showcard() { 
+        					document.getElementById('rcptno').style.display = 'block';
+						   	document.getElementById('chddno').style.display = 'none';
+						   	document.getElementById('amtp').style.display = 'block';
+        				   	document.getElementById('amtb').style.display = 'block';
+       				   	   	document.getElementById('trnsno').style.display = 'block';
+       				   	   	
+       				   		document.getElementById('chddno').value = null;
+
+							if(document.getElementById('trnsno').value = "null"){
+									document.getElementById('trnsno').value = null;
+							}
+   				   			
+   				   			
+       				   		document.getElementById('rcptno').required = "required";
+					   		document.getElementById('amtp').required = "required";
+    				   		document.getElementById('amtb').required = "required";
+    				   		document.getElementById('trnsno').required = "required";
+    				   		document.getElementById('chddno').required = false;
+    				   	}
+        		
+        				function showchqdd() { 
+        					document.getElementById('rcptno').style.display = 'block';
+				   			document.getElementById('trnsno').style.display = 'none';
+				   			document.getElementById('amtp').style.display = 'block';
+				   			document.getElementById('amtb').style.display = 'block';
+			   	   			document.getElementById('chddno').style.display = 'block';
+			   				document.getElementById('rcptno').required = "required";
+       				   		
+   				   			document.getElementById('trnsno').value = null;
+							
+							if(document.getElementById('chddno').value = "null"){
+									document.getElementById('chddno').value = null;
+							}			   				
+
+				   			document.getElementById('amtp').required = "required";
+				   			document.getElementById('amtb').required = "required";
+			   	   			document.getElementById('chddno').required = "required";
+			   	   			document.getElementById('trnsno').required = false;
+			   	   		}
+
+      			</script>
+ 				
+ 			     		
+ 			    <%
+					String paymentmode = "";
+					if(session.getAttribute("paymentmodeval")!=null){
+						Cookie forName = new Cookie("paymentmodeval",session.getAttribute("paymentmodeval").toString());
+						paymentmode = forName.getValue();
+					}
+				%> 		
+				
+				
+ 			<%
+				String paymenttype = "";
+				String cash = "";
+				String card = "";
+				String chdd = "";
+				if(session.getAttribute("paymentmodeval")!=null){
+					Cookie forName = new Cookie("paymentmodeval",session.getAttribute("paymentmodeval").toString());
+					paymenttype = forName.getValue();
+				}
+				
+				if(paymenttype.contains("Cash")){
+					cash="checked";
+				}else{
+					cash="";
+					if(paymenttype.contains("Card")){
+						card="checked";
+						}else{
+							card="";
+							if(paymenttype.contains("Cheque/DD")){
+								chdd="checked";
+							}else{
+								chdd="";}
+							}
+					}
+			%>
+ 			     		
+ 			     		
+     	 		<input id="cshpaymentmode" type="radio" name="payment"
+     	 		 value="Cash" onclick="showcash();" <%out.print(cash); %> required>Cash
+	 			<input id="crdpaymentmode" type="radio" name="payment" 
+	 			value="Card" onclick="showcard();" <%out.print(card); %> >Card
+	  			<input id="chddpaymentmode" type="radio" name="payment" 
+	  			value="Cheque/DD" onclick="showchqdd();" <%out.print(chdd); %> >Cheque/DD
+	  		
+	  			
+	  			<%
+					String recval = "";
+					if(session.getAttribute("reciptnoval")!=null){
+						Cookie forName = new Cookie("reciptnoval",session.getAttribute("reciptnoval").toString());
+						recval = forName.getValue();
+					}
+				%>
+	  		
+	  			<%
+					String rcptnoa = "";
+					if(session.getAttribute("rcptnoa") != null){
+						rcptnoa = session.getAttribute("rcptnoa").toString();
+					}
+				%>
+	  		
+        		<div><input name="rcptno" type="text" id="rcptno" style="display: none;"  
+        		value="<%out.print(recval); %>"
+        		placeholder="Slip/Receipt Number" maxlength="30" > 
+        		<%
+					if(session.getAttribute("invalidrcpt")!=null){
+						out.println("<br>" + session.getAttribute("invalidrcpt"));
+					}
+				%><% out.println(rcptnoa); %>
+        		</div>
+        	
+        		<%
+					String transval = "";
+					if(session.getAttribute("transnoval")!=null){
+						Cookie forName = new Cookie("transnoval",session.getAttribute("transnoval").toString());
+						transval = forName.getValue();
+					}
+					System.out.println("sdsaaa " + transval);
+				%>
+        	
+        		<%
+				String transnoa = "";
+				if(session.getAttribute("transnoa") != null){
+					rcptnoa = session.getAttribute("transnoa").toString();
+				}
+				%>
+        	
+        		<input type="text" id="trnsno" style="display : none;"
+        		value="<%out.print(transval);%>"
+        		name="transno" placeholder="Transaction ID" maxlength="30"/>   
+        		      
+        		<font style="color:red" ><%out.print(transnoa);%></font>
+        		<%
+					String chddval = "";
+					if(session.getAttribute("chddnoval")!=null){
+						Cookie forName = new Cookie("chddnoval",session.getAttribute("chddnoval").toString());
+						chddval = forName.getValue();
+					}
+				%>
+        		
+        		<%--
+					String chddnoa = "";
+					if(session.getAttribute("chddnoa") != null){
+						chddnoa = session.getAttribute("chddnoa").toString();
+					}
+				--%>
+				
+        		<input type="text" id="chddno" style="display: none;" 
+        		value="<%out.print(chddval); %>"
+        		name="chddno" placeholder="Cheque/DD Number" maxlength="30" >
+        		<font style="color:red" ><%--out.print(chddnoa);--%></font>
+       		
+        		<%
+					String amtpval = "";
+					if(session.getAttribute("amountpaidval")!=null){
+						Cookie forName = new Cookie("amountpaidval",session.getAttribute("amountpaidval").toString());
+						amtpval = forName.getValue();
+					}
+				%>	
+        			
+        		<div><input type="number" id="amtp" style="display: none;" 
+        		value="<%out.print(amtpval); %>"
+        		name="amtp" placeholder="Amount Paid">
+        		<%
+					if(session.getAttribute("invalidamtp")!=null){
+						out.println("<br>" + session.getAttribute("invalidamtp"));
+					}
+				%>
+        		</div>
+        		
+        		<%
+					String amtbval = "";
+					if(session.getAttribute("amountbalval")!=null){
+						Cookie forName = new Cookie("amountbalval",session.getAttribute("amountbalval").toString());
+						amtbval = forName.getValue();
+					}
+				%>
+        		
+        		<div><input type="number" id="amtb" style="display: none;" 
+        		value="<%out.print(amtbval); %>"
+        		name="amtb" placeholder="Amount Balance">
+        		<%
+					if(session.getAttribute("invalidamtb")!=null){
+						out.println("<br>" + session.getAttribute("invalidamtb"));
+					}
+				%>
+        		</div>
+        		
+        	</td>	
+		</tr>
+
+	
+	
+	
+				<%
+					String imgval = "";
+					if(session.getAttribute("photoval")!=null){
+						Cookie forName = new Cookie("photoval",session.getAttribute("photoval").toString());
+						imgval = forName.getValue();
+					}
+				%>
+		
+		<tr valign="top">
+			<td colspan=2>
+				<font size=1>
+					<b>Upload Passport size photo:</b></font>
+				
+				<input id="photo" name="photo" type="file" accept="image/*">
+				<span style="align: 'right'"><%
+					if(session.getAttribute("invalidimgs")!=null){
+						out.println(session.getAttribute("invalidimgs"));
+					}
+					if(session.getAttribute("invalidimg")!=null){
+						out.println(session.getAttribute("invalidimg"));
+					}
+				%></span>
+				</td>
+			
+		</tr>
+	
+		<tr valign="top">
+			<td colspan=2>
+			<font size=-1>
+				<input id="chkbox" name="check" type="checkbox" value="2" required><font color="red">*</font>Agree to SUBMIT.</font></td>
+		</tr>
+
+		<%
+			String hidden="";
+			if(session.getAttribute("Error")!=null){
+				hidden="hidden=''";
+			}else{hidden="";}
+		%>
+
+		<tr valign="top">
+			<td>&nbsp;</td>
+			<td>
+				<input id="sub" type="submit" value="SUBMIT" <%out.print(hidden);%>>
+				<input id="rex" type="button" value="RESET" onclick="window.location.replace('index.jsp')"></td>
+		</tr>
+	
+	</table>
+	<font color=red size=5><b>
+	<%
+		if(session.getAttribute("Error")!=null){
+			out.print(session.getAttribute("Error"));
+		}
+	%></b></font>
+	<div><h3 align="center" style="margin-right:10vh;"><font color="red"><%if(session.getAttribute("NOSERVER")!=null){out.println(session.getAttribute("NOSERVER"));}%></font></h3></div>
+	</form>
+	
+</body>
+</html>

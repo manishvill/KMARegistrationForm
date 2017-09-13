@@ -1,0 +1,7 @@
+1488553370387	Rename type 'ConnectingDB'
+1488553447725	Rename type 'DBConnection'
+1488558000386	Rename type 'InputFromUser'
+1488558065762	Rename type 'UserInputToDB'
+1488559763259	Rename local variable 'i'
+1488569834748	Rename type 'PaymentInput'
+1488569864573	Rename type 'MySqlConnection'

@@ -1,0 +1,44 @@
+package com.kma.services;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class ConnectingMySqlDB {
+
+	public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
+	public static final String URL = "jdbc:mysql://localhost:3306/kmaregistrations?autoReconnect=true&useSSL=true&verifyServerCertificate=true";
+	public static final String USERNAME = "root";
+	public static final String PASSWORD = "123456";
+	
+	private static ConnectingMySqlDB connectingmysqldb;
+	
+	private ConnectingMySqlDB(){}
+	
+	public static ConnectingMySqlDB getConnectingMySqlDB() {
+        if (null == connectingmysqldb) {
+        	connectingmysqldb = new ConnectingMySqlDB();
+        	System.out.println("Creating new instance");
+        }
+        return connectingmysqldb;
+    }
+	
+	public Connection getConnected(){
+		try {
+			Class.forName(DRIVER_CLASS);
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+		
+		try {
+			Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			return conn;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+}

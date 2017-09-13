@@ -1,0 +1,16 @@
+127.0.0.1 - - [28/Aug/2017:11:41:53 +0530] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [28/Aug/2017:11:41:56 +0530] "GET /KMARegistrationForm/ HTTP/1.1" 200 8678
+0:0:0:0:0:0:0:1 - - [28/Aug/2017:11:41:56 +0530] "GET /KMARegistrationForm/martial_arts-1920x1080.jpg HTTP/1.1" 200 291613
+0:0:0:0:0:0:0:1 - - [28/Aug/2017:11:41:57 +0530] "GET /favicon.ico HTTP/1.1" 404 1016
+0:0:0:0:0:0:0:1 - - [28/Aug/2017:11:43:50 +0530] "POST /KMARegistrationForm/CheckAvailability HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2017:12:54:54 +0530] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [28/Aug/2017:12:55:02 +0530] "GET /KMARegistrationForm/ HTTP/1.1" 200 8678
+0:0:0:0:0:0:0:1 - - [28/Aug/2017:12:55:02 +0530] "GET /favicon.ico HTTP/1.1" 404 1016
+0:0:0:0:0:0:0:1 - - [28/Aug/2017:12:57:04 +0530] "GET /KMARegistrationForm/ HTTP/1.1" 200 8678
+0:0:0:0:0:0:0:1 - - [28/Aug/2017:12:58:19 +0530] "GET /KMARegistrationForm/ HTTP/1.1" 200 8678
+0:0:0:0:0:0:0:1 - - [28/Aug/2017:12:58:19 +0530] "GET /KMARegistrationForm/martial_arts-1920x1080.jpg HTTP/1.1" 200 291613
+0:0:0:0:0:0:0:1 - - [28/Aug/2017:12:58:19 +0530] "GET /favicon.ico HTTP/1.1" 404 1016
+0:0:0:0:0:0:0:1 - - [28/Aug/2017:12:58:19 +0530] "GET /favicon.ico HTTP/1.1" 404 1016
+0:0:0:0:0:0:0:1 - - [28/Aug/2017:12:59:22 +0530] "GET /KMARegistrationForm/ HTTP/1.1" 200 8678
+0:0:0:0:0:0:0:1 - - [28/Aug/2017:12:59:24 +0530] "GET /KMARegistrationForm/martial_arts-1920x1080.jpg HTTP/1.1" 200 291613
+0:0:0:0:0:0:0:1 - - [28/Aug/2017:12:59:25 +0530] "GET /favicon.ico HTTP/1.1" 404 1016

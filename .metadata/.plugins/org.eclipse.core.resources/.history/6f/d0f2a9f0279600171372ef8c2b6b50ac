@@ -1,0 +1,98 @@
+package kma_registration_form_DB;
+
+import java.io.InputStream;
+
+public class InputFromWebPage {
+
+	public String name = null;
+	public String dob = null;
+	public String gender = null;
+	public String contactno = null;
+	public String wano = null;
+	public String cemail = null;
+	public String pemail = null;
+	public InputStream imageAdd = null;
+		
+	
+	private static InputFromWebPage inputfromwebpage;
+	
+	public InputFromWebPage(){}
+	
+	public static InputFromWebPage getInputFromWebPage() {
+        if (null == inputfromwebpage) {
+        	inputfromwebpage = new InputFromWebPage();
+        	System.out.println("Creating new instance input web");
+        }
+        return inputfromwebpage;
+    }
+	
+//---------------------------sstters-----------------------------------------------
+	
+	public void setImageAdd(InputStream imageAdd) {
+		this.imageAdd = imageAdd;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	
+	public void setContactno(String contactno) {
+		this.contactno = contactno;
+	}
+
+	public void setWano(String wano) {
+		this.wano = wano;
+	}
+
+	public void setCemail(String cemail) {
+		this.cemail = cemail;
+	}
+
+	public void setPemail(String pemail) {
+		this.pemail = pemail;
+	}
+
+	
+//-------------------------getters---------------------------------------------------------------------
+
+
+	public String getName() {
+		return this.name;
+	}
+
+	public String getDob() {
+		return this.dob;
+	}
+	
+	public String getGender() {
+		return this.gender;
+	}
+	
+	public String getPemail() {
+		return this.pemail;
+	}
+	
+	public String getCemail() {
+		return this.cemail;
+	}
+	
+	public String getContactno() {
+		return this.contactno;
+	}
+
+	public String getWano() {
+		return this.wano;
+	}
+	
+	public InputStream getImageAdd() {
+		return this.imageAdd;
+	}
+}
