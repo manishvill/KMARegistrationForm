@@ -229,3 +229,6 @@ Sep 10, 2017 20:09:02.97 [4492:10592:0910/200902.972:ERROR:service_manager.cc(14
 Sep 10, 2017 20:11:47.72 [4492:10592:0910/201147.720:ERROR:service_manager.cc(142)] Connection InterfaceProviderSpec prevented service: content_plugin from binding interface: memory_instrumentation::mojom::Coordinator exposed by: content_browser
 Sep 10, 2017 20:36:48.98 [4492:10592:0910/203648.985:ERROR:service_manager.cc(142)] Connection InterfaceProviderSpec prevented service: content_plugin from binding interface: memory_instrumentation::mojom::Coordinator exposed by: content_browser
 Sep 10, 2017 20:43:56.82 [4492:5208:0910/204356.826:ERROR:CONSOLE(3163)] "Request Target.setAttachToFrames failed. {"code":-32601,"message":"'Target.setAttachToFrames' wasn't found"}", source: chrome-devtools://devtools/bundled/inspector.js (3163)
+
+Sep 13, 2017 18:29:01.41 NEW SESSION
+Sep 13, 2017 18:29:01.41 [6684:4320:0913/182901.389:ERROR:service_manager.cc(142)] Connection InterfaceProviderSpec prevented service: content_plugin from binding interface: memory_instrumentation::mojom::Coordinator exposed by: content_browser
